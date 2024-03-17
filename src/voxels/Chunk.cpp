@@ -18,7 +18,7 @@ Chunk::Chunk(int xPos, int yPos, int zPos) : x(xPos), y(yPos), z(zPos)
                 // const int real_z = _z + this->z * CHUNK_D;
                 uint8_t id = real_y <= (std::sin(real_x * 0.1f) * 0.5f + 0.5f) * 10;
                 if (real_y <= 2)
-                    id = 2;
+                    id = 1;
                 voxels[(_y * CHUNK_D + _z) * CHUNK_W + _x].id = id;
             }
         }

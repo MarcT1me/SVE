@@ -23,6 +23,9 @@ class Chunk
 public:
     int x, y, z;
     voxel* voxels;
+
+    mutable bool modified = true;
+    
     Chunk(int xPos, int yPos, int zPos);
     ~Chunk();
 };
