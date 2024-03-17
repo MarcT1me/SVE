@@ -10,7 +10,6 @@
 #ifndef GRAPHICS_TEXTURE_H_
 #define GRAPHICS_TEXTURE_H_
 
-#include <string>
 
 class Texture
 {
@@ -22,5 +21,6 @@ public:
 
     void bind() const;
 };
+
 
 #endif

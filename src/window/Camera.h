@@ -11,7 +11,10 @@
 #define WINDOW_CAMERA_H_
 
 #include <glm/glm.hpp>
-using namespace glm;  // NOLINT(clang-diagnostic-header-hygiene)
+
+
+using namespace glm; // NOLINT(clang-diagnostic-header-hygiene)
+
 
 class Camera
 {

@@ -6,7 +6,6 @@
 #include <glad/glad.h>
 #include <png.h>
 
-
 int _png_load(const char* file, int* width, int* height)
 {
     FILE* f;
@@ -129,7 +128,6 @@ int _png_load(const char* file, int* width, int* height)
     fclose(f);
     return texture;
 }
-
 
 Texture* load_texture(const std::string& filename)
 {

@@ -64,7 +64,7 @@ int main()
     /* Scene */
     const auto* chunks = new Chunks(8, 1, 8);
     Mesh** meshes = new Mesh*[chunks->volume];
-    VoxelRenderer renderer(1024 * 1024 * 8);  // NOLINT(bugprone-implicit-widening-of-multiplication-result)
+    VoxelRenderer renderer(1024 * 1024 * 8); // NOLINT(bugprone-implicit-widening-of-multiplication-result)
 
     Chunk* closes[27];
     for (size_t i = 0; i < chunks->volume; i++)
@@ -91,9 +91,9 @@ int main()
         Mesh* mesh = renderer.render(chunk, const_cast<const Chunk**>(closes));
         meshes[i] = mesh;
     }
-    
+
     /* camera */
-    auto* camera = new Camera(vec3(4*16*0, 10, 4*16*0), radians(60.0f));
+    auto* camera = new Camera(vec3(4 * 16 * 0, 10, 4 * 16 * 0), radians(60.0f));
 
     /* values */
     float lastFpsTime = glfwGetTime();
@@ -147,10 +147,12 @@ int main()
             camY += -Events::deltaY / winData.height * 2;
             camX += -Events::deltaX / winData.height * 2;
 
-            if (camY < -radians(89.0f)){
+            if (camY < -radians(89.0f))
+            {
                 camY = -radians(89.0f);
             }
-            if (camY > radians(89.0f)){
+            if (camY > radians(89.0f))
+            {
                 camY = radians(89.0f);
             }
 
@@ -186,7 +188,8 @@ int main()
         {
             const auto* chunk = chunks->chunks[i];
             auto* mesh = meshes[i];
-            const mat4 model_matrix = translate(mat4(1.0f), vec3(chunk->x*CHUNK_W, chunk->y*CHUNK_H, chunk->z*CHUNK_D));
+            const mat4 model_matrix = translate(
+                mat4(1.0f), vec3(chunk->x * CHUNK_W, chunk->y * CHUNK_H, chunk->z * CHUNK_D));
             shader->uniformMatrix("model_matrix", model_matrix);
             mesh->draw(GL_TRIANGLES);
         }

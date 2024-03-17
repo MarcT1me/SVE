@@ -34,7 +34,6 @@ struct WindowData
     unsigned int u_resolution_location;
 };
 
-
 class Window
 {
 public:

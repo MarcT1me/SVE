@@ -24,6 +24,7 @@
 
 int chunk_attrs[] = {3, 2, 1, 0};
 
+
 VoxelRenderer::VoxelRenderer(size_t capacity) : capacity(capacity)
 {
     buffer = new float[capacity * VERTEX_SIZE * 6];
@@ -34,7 +35,8 @@ VoxelRenderer::~VoxelRenderer()
     delete[] buffer;
 }
 
-Mesh* VoxelRenderer::render(Chunk* chunk, const Chunk** chunks)
+
+Mesh* VoxelRenderer::render(Chunk* chunk, const Chunk** chunks) const
 {
     size_t index = 0;
     for (int y = 0; y < CHUNK_H; y++)
@@ -54,7 +56,7 @@ Mesh* VoxelRenderer::render(Chunk* chunk, const Chunk** chunks)
                 float l;
                 const float uvsize = 1.0f / 16.0f;
                 const float u = id % 16 * uvsize;
-                const float v = 1 - (1 + id / 16) * uvsize;  // NOLINT(bugprone-integer-division)
+                const float v = 1 - (1 + id / 16) * uvsize; // NOLINT(bugprone-integer-division)
 
                 if (!IS_BLOCKED(x, y+1, z))
                 {

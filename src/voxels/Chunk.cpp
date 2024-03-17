@@ -25,6 +25,7 @@ Chunk::Chunk(int xPos, int yPos, int zPos) : x(xPos), y(yPos), z(zPos)
     }
 }
 
-Chunk::~Chunk(){
+Chunk::~Chunk()
+{
     delete[] voxels;
 }

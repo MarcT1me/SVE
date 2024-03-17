@@ -5,7 +5,6 @@
 
 Texture::Texture(unsigned id, int width, int height) : id(id), width(width), height(height)
 {
-    
 }
 
 Texture::~Texture()

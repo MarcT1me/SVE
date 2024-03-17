@@ -10,19 +10,20 @@
 #ifndef GRAPHICS_VOXELRENDERER_H_
 #define GRAPHICS_VOXELRENDERER_H_
 
+
 class Mesh;
 class Chunk;
+
 
 class VoxelRenderer
 {
     float* buffer;
-    size_t capacity;  // NOLINT(clang-diagnostic-unused-private-field)
+    size_t capacity; // NOLINT(clang-diagnostic-unused-private-field)
 public:
     VoxelRenderer(size_t capacity);
     ~VoxelRenderer();
 
-    Mesh* render(Chunk* chunk, const Chunk** chunks);
+    Mesh* render(Chunk* chunk, const Chunk** chunks) const;
 };
-
 
 #endif

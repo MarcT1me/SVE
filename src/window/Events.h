@@ -9,6 +9,7 @@
 #ifndef WINDOW_EVENTS_H_
 #define WINDOW_EVENTS_H_
 
+
 typedef unsigned int uint;
 
 enum
@@ -40,6 +41,5 @@ public:
 
     static void toggleCursor();
 };
-
 
 #endif

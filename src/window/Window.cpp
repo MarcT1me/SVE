@@ -8,6 +8,7 @@
 
 GLFWwindow* Window::window;
 
+
 int Window::initialise(WindowData& winData, const char* title)
 {
     /* Init GLFWindow */
@@ -47,6 +48,7 @@ int Window::initialise(WindowData& winData, const char* title)
     glfwSetWindowUserPointer(window, &winData);
     return 0;
 }
+
 
 void Window::setCursorMode(int mode)
 {

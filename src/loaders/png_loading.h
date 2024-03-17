@@ -12,7 +12,9 @@
 
 #include <string>
 
+
 class Texture;
+
 
 extern Texture* load_texture(const std::string& filename);
 

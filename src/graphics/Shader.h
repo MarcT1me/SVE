@@ -13,6 +13,7 @@
 #include <string>
 #include <glm/fwd.hpp>
 
+
 class Shader
 {
 public:
@@ -23,6 +24,7 @@ public:
     void use() const;
     void uniformMatrix(std::string name, glm::mat4 matrix) const;
 };
+
 
 extern Shader* load_shader(std::string vertexFile, std::string fragmentFile);
 

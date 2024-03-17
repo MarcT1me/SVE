@@ -10,8 +10,10 @@
 #ifndef VOXELS_CHUNKS_H_
 #define VOXELS_CHUNKS_H_
 
+
 class Chunk;
 class voxel;
+
 
 class Chunks
 {
@@ -19,7 +21,7 @@ public:
     Chunk** chunks;
     size_t volume;
     unsigned int w, h, d;
-    
+
     Chunks(int w, int h, int d);
     ~Chunks();
 };

@@ -1,9 +1,10 @@
 ﻿#include "Events.h"
 #include "Window.h"
 
+#include <cstring>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <cstring>
 
 
 bool* Events::_keys;
@@ -21,8 +22,8 @@ void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
     if (Events::_cursor_started)
     {
-        Events::deltaX += xpos-Events::x;
-        Events::deltaY += ypos-Events::y;
+        Events::deltaX += xpos - Events::x;
+        Events::deltaY += ypos - Events::y;
     }
     else
     {
@@ -69,6 +70,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glUniform2f(winData->u_resolution_location, static_cast<float>(width), static_cast<float>(height));
 }
 
+
 int Events::initialize()
 {
     GLFWwindow* window = Window::window;
@@ -84,6 +86,7 @@ int Events::initialize()
     glfwSetWindowSizeCallback(window, framebuffer_size_callback);
     return 0;
 }
+
 
 bool Events::pressed(int keycode)
 {
