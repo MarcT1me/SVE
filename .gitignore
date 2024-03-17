@@ -1,0 +1,10 @@
+﻿.vs
+.idea
+
+x64
+
+glad.c
+Minecraft_cpp.sln
+Minecraft_cpp.vcxproj
+Minecraft_cpp.vcxproj.filters
+Minecraft_cpp.vcxproj.user
