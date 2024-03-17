@@ -84,7 +84,7 @@ int main()
     } // load crosshair shader
 
     /* Texture */
-    const Texture* texture = load_texture("res/block.png");
+    const Texture* texture = load_texture("res/tex_atl2.png");
     if (texture == nullptr)
     {
         std::cerr << "failed to load texture" << std::endl;
@@ -201,7 +201,15 @@ int main()
                         static_cast<int>(iend.x)+static_cast<int>(norm.x),
                         static_cast<int>(iend.y)+static_cast<int>(norm.y),
                         static_cast<int>(iend.z)+static_cast<int>(norm.z),
-                        2);
+                        4);
+                }
+                if (Events::jClicked(GLFW_MOUSE_BUTTON_3))
+                {
+                    chunks->set(
+                        static_cast<int>(iend.x)+static_cast<int>(norm.x),
+                        static_cast<int>(iend.y)+static_cast<int>(norm.y),
+                        static_cast<int>(iend.z)+static_cast<int>(norm.z),
+                        49);
                 }
             }
         }
