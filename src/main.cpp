@@ -6,27 +6,28 @@
  * according to the lessons: Minecraft on C++ - MihailRis
  */
 #define GLEW_STATIC  // NOLINT(clang-diagnostic-unused-macros)
-
-#include "graphics/Shader.h"
-#include "graphics/Texture.h"
-#include "window/Events.h"
-#include "window/Window.h"
-#include "loaders/png_loading.h"
-#include "window/Camera.h"
-#include "graphics/Mesh.h"
-#include "voxels/Chunk.h"
-#include "graphics/VoxelRenderer.h"
-#include "voxels/Chunks.h"
-// #include "voxels/voxel.h"
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
+// standard
 #include <iostream>
+// other
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
 using namespace glm;
+// engine
+#include "window/Window.h"
+#include "window/Events.h"
+// shaders
+#include "graphics/Shader.h"
+#include "graphics/Texture.h"
+#include "loaders/png_loading.h"
+// space
+#include "window/Camera.h"
+#include "graphics/Mesh.h"
+// voxels
+#include "voxels/Chunk.h"
+#include "voxels/Chunks.h"
+#include "graphics/VoxelRenderer.h"
+#include "voxels/voxel.h"
 
 
 constexpr float crosshairVertices[] = {
@@ -94,7 +95,7 @@ int main()
     }
 
     /* Meshes */
-    const auto* chunks = new Chunks(8, 1, 8);
+    const auto* chunks = new Chunks(4, 1, 4);
     Mesh** meshes = new Mesh*[chunks->volume];
     for (size_t i = 0; i < chunks->volume; i++)
     {
@@ -115,6 +116,7 @@ int main()
     float camX = 0.0f;
     float camY = 0.0f;
     float speed;
+    uint8_t block_id = 4;
 
     /* shaders uniforms */
     const GLint u_resolution_location = glGetUniformLocation(shader->id, "u_resolution");
@@ -125,69 +127,78 @@ int main()
     /* main-loop */
     while (!Window::isShouldClose())
     {
+        std::cout << "\r" << std::flush;
         /* Events */
         if (Events::jPressed(GLFW_KEY_ESCAPE))
             Window::setShouldClose(true);
         if (Events::jPressed(GLFW_KEY_TAB))
             Events::toggleCursor();
-        if (Events::pressed(GLFW_KEY_LEFT_CONTROL))
+        // move
         {
-            speed = 10.0f;
-        }
-        else
-        {
-            speed = 5.0f;
-        }
-        if (Events::pressed(GLFW_KEY_W))
-        {
-            camera->position += camera->front * deltaTime * speed;
-        }
-        if (Events::pressed(GLFW_KEY_S))
-        {
-            camera->position -= camera->front * deltaTime * speed;
-        }
-        if (Events::pressed(GLFW_KEY_D))
-        {
-            camera->position += camera->right * deltaTime * speed;
-        }
-        if (Events::pressed(GLFW_KEY_A))
-        {
-            camera->position -= camera->right * deltaTime * speed;
-        }
-        if (Events::pressed(GLFW_KEY_R))
-        {
-            camera->position += camera->up * deltaTime * speed;
-        }
-        if (Events::pressed(GLFW_KEY_F))
-        {
-            camera->position -= camera->up * deltaTime * speed;
-        }
-        if (Events::_cursor_locked)
-        {
-            camY += -Events::deltaY / winData.height * 2;
-            camX += -Events::deltaX / winData.height * 2;
-
-            if (camY < -radians(89.0f))
+            // speed
+            if (Events::pressed(GLFW_KEY_LEFT_CONTROL))
             {
-                camY = -radians(89.0f);
+                speed = 10.0f;
             }
-            if (camY > radians(89.0f))
+            else
             {
-                camY = radians(89.0f);
+                speed = 5.0f;
             }
+            // steps
+            if (Events::pressed(GLFW_KEY_W))
+            {
+                camera->position += normalize(vec3(camera->front.x, 0, camera->front.z)) * deltaTime * speed;
+            }
+            if (Events::pressed(GLFW_KEY_S))
+            {
+                camera->position -= normalize(vec3(camera->front.x, 0, camera->front.z)) * deltaTime * speed;
+            }
+            if (Events::pressed(GLFW_KEY_D))
+            {
+                camera->position += normalize(vec3(camera->right.x, 0, camera->right.z)) * deltaTime * speed;
+            }
+            if (Events::pressed(GLFW_KEY_A))
+            {
+                camera->position -= normalize(vec3(camera->right.x, 0, camera->right.z)) * deltaTime * speed;
+            }
+            if (Events::pressed(GLFW_KEY_SPACE))
+            {
+                camera->position += normalize(vec3(0, camera->up.y, 0)) * deltaTime * speed;
+            }
+            if (Events::pressed(GLFW_KEY_LEFT_SHIFT))
+            {
+                camera->position -= normalize(vec3(0, camera->up.y, 0)) * deltaTime * speed;
+            }
+            if (Events::_cursor_locked)
+            {
+                camY += -Events::deltaY / winData.height * 2;
+                camX += -Events::deltaX / winData.height * 2;
 
-            camera->rotation = mat4(1.0f);
-            camera->rotate(camY, camX, 0);
+                if (camY < -radians(89.0f))
+                {
+                    camY = -radians(89.0f);
+                }
+                if (camY > radians(89.0f))
+                {
+                    camY = radians(89.0f);
+                }
+
+                camera->rotation = mat4(1.0f);
+                camera->rotate(camY, camX, 0);
+            }
         }
         // build
         {
+            // RayCast voxel
             vec3 end;
             vec3 norm;
             vec3 iend;
             voxel* vox = chunks->rayCast(camera->position, camera->front, 10.0, end, norm, iend);
+            // manipulate with voxels
             if (vox != nullptr)
             {
-                if (Events::jClicked(GLFW_MOUSE_BUTTON_1))
+                std::cout << "block found; id: " << static_cast<int>(vox->id) << "    selected block id: " << static_cast<int>(block_id);
+                if (Events::jClicked(SVE_MOUSE_LEFT_BUTTON))
                 {
                     chunks->set(
                         static_cast<int>(iend.x),
@@ -195,27 +206,24 @@ int main()
                         static_cast<int>(iend.z),
                         0);
                 }
-                if (Events::jClicked(GLFW_MOUSE_BUTTON_2))
+                if (Events::jClicked(SVE_MOUSE_RIGHT_BUTTON))
                 {
                     chunks->set(
                         static_cast<int>(iend.x)+static_cast<int>(norm.x),
                         static_cast<int>(iend.y)+static_cast<int>(norm.y),
                         static_cast<int>(iend.z)+static_cast<int>(norm.z),
-                        4);
+                        block_id);
                 }
-                if (Events::jClicked(GLFW_MOUSE_BUTTON_3))
-                {
-                    chunks->set(
-                        static_cast<int>(iend.x)+static_cast<int>(norm.x),
-                        static_cast<int>(iend.y)+static_cast<int>(norm.y),
-                        static_cast<int>(iend.z)+static_cast<int>(norm.z),
-                        49);
-                }
+                // change selected block
+                if (Events::jScroll(SVE_MOUSE_SCROLL_UP))
+                    block_id++;
+                if (Events::jScroll(SVE_MOUSE_SCROLL_DOWN))
+                    block_id--;
             }
         }
-
-        /* chunks */
-        Chunk* closes[27];
+        
+        /* Update */
+        Chunk* closes[27]; // scene
         for (size_t i = 0; i < chunks->volume; i++)
         {
             Chunk* chunk = chunks->chunks[i];
@@ -245,11 +253,10 @@ int main()
                 oz += 1;
                 closes[(oy * 3 + oz) * 3 + ox] = other;
             }
-            Mesh* mesh = renderer.render(chunk, const_cast<const Chunk**>(closes));
+            Mesh* mesh = renderer.render(chunk, const_cast<const Chunk**>(closes), true);
             meshes[i] = mesh;
         }
-        
-        /* Update */
+        // delta and fps timer
         const float current_time = glfwGetTime();
         deltaTime = current_time - lastTime;
         lastTime = current_time;
@@ -257,11 +264,8 @@ int main()
         frames++;
         if (current_time - lastFpsTime >= 1.0)
         {
-            std::cout << "\r" << std::flush;
-
-            std::cout << "FPS: " << frames;
-            std::cout << "\tdelta: " << deltaTime;
-            std::cout << std::flush;
+            std::cout << "    FPS: " << frames;
+            std::cout << "    delta: " << deltaTime << "\t\t\t\t\t\t\t";
 
             frames = 0;
             lastFpsTime = current_time;
@@ -288,8 +292,10 @@ int main()
         fill->use();
         crosshairMesh->draw(GL_LINES);
 
+        /* main end */
         Window::swapBuffers();
         Events::pullEvents();
+        std::cout << std::flush;
     }
     delete shader;
     delete fill;

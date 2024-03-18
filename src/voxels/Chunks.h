@@ -9,8 +9,8 @@
 // ReSharper disable CppClangTidyClangDiagnosticMismatchedTags
 #ifndef VOXELS_CHUNKS_H_
 #define VOXELS_CHUNKS_H_
-
-# include <glm/glm.hpp>
+// others
+#include <glm/glm.hpp>
 
 
 class Chunk;

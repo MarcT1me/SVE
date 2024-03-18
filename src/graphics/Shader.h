@@ -9,8 +9,9 @@
 // ReSharper disable CppClangTidyClangDiagnosticMismatchedTags
 #ifndef GRAPHICS_SHADER_H_
 #define GRAPHICS_SHADER_H_
-
+// standard
 #include <string>
+// others
 #include <glm/fwd.hpp>
 
 

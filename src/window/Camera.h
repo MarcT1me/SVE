@@ -9,7 +9,7 @@
 #pragma once
 #ifndef WINDOW_CAMERA_H_
 #define WINDOW_CAMERA_H_
-
+// others
 #include <glm/glm.hpp>
 
 

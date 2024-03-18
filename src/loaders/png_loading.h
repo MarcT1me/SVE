@@ -9,7 +9,7 @@
 // ReSharper disable CppClangTidyClangDiagnosticMismatchedTags
 #ifndef LOADERS_PNG_LOADING_H_
 #define LOADERS_PNG_LOADING_H_
-
+// standard
 #include <string>
 
 

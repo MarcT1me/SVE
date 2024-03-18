@@ -1,9 +1,9 @@
 ﻿#include "Shader.h"
-
+// standard
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
+// others
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 

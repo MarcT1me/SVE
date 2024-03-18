@@ -1,10 +1,11 @@
 ﻿#include "png_loading.h"
-#include "../graphics/Texture.h"
-
+// standard
 #include <iostream>
-
+// others
 #include <glad/glad.h>
 #include <png.h>
+// engine
+#include "../graphics/Texture.h"
 
 int _png_load(const char* file, int* width, int* height)
 {

@@ -11,9 +11,9 @@
 #ifndef VOXELS_CHUNK_H_
 #define VOXELS_CHUNK_H_
 
-#define CHUNK_W 16
-#define CHUNK_H 16
-#define CHUNK_D 16
+#define CHUNK_W 32
+#define CHUNK_H 128
+#define CHUNK_D 32
 #define CHUNK_VOL (CHUNK_W * CHUNK_H * CHUNK_D)
 
 class voxel;

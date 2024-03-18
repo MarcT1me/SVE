@@ -1,9 +1,10 @@
-﻿#include "Window.h"
-#include "Camera.h"
-
+﻿#include "Camera.h"
+// others
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <GLFW/glfw3.h>
+// engine
+#include "Window.h"
 
 
 Camera::Camera(vec3 position, float fov) : position(position), fov(fov), rotation(1.0f)
